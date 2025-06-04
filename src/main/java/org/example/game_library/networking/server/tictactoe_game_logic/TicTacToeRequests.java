@@ -1,4 +1,6 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.server.tictactoe_game_logic;
+
+import org.example.game_library.networking.server.ThreadCreator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,5 +20,11 @@ public class TicTacToeRequests {
     }
 
     public static void handleScore(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+    }
+
+    public static void handleForfeit(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+    }
+
+    public static void handleMove(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
     }
 }

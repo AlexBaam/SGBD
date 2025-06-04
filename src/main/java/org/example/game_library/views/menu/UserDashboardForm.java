@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 import javafx.scene.control.Alert;
 
-import org.example.game_library.networking.ClientToServerProxy;
+import org.example.game_library.networking.client.ClientToServerProxy;
 import java.util.List;
 
 public class UserDashboardForm {

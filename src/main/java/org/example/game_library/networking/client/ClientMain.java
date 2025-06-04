@@ -1,4 +1,4 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.client;
 
 import org.example.game_library.utils.loggers.AppLogger;
 import javafx.application.Application;

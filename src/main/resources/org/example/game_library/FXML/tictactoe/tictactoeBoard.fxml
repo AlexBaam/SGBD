@@ -45,15 +45,15 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.rowIndex="1" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.rowIndex="2" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="cell1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" />
+            <Button fx:id="cell2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" />
+            <Button fx:id="cell3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" />
+            <Button fx:id="cell4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.rowIndex="1" />
+            <Button fx:id="cell5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="cell6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="cell7" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.rowIndex="2" />
+            <Button fx:id="cell8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="cell9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="150.0" prefWidth="150.0" styleClass="tictactoe-cell" stylesheets="@../styles.css" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label alignment="CENTER" layoutX="299.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="200.0" text="Tic Tac Toe" textAlignment="CENTER">
@@ -63,8 +63,8 @@
       </Label>
       <HBox layoutX="249.0" layoutY="619.0" prefHeight="70.0" prefWidth="300.0">
          <children>
-            <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Save" />
-            <Button fx:id="forfeitButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Forfeit" />
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveClick" prefHeight="70.0" prefWidth="150.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Save" />
+            <Button fx:id="forfeitButton" mnemonicParsing="false" onAction="#onForfeitClick" prefHeight="70.0" prefWidth="150.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Forfeit" />
          </children>
       </HBox>
    </children>

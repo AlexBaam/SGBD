@@ -32,4 +32,10 @@ module org.example.game_library {
 
     exports org.example.game_library.views.minesweeper;
     opens org.example.game_library.views.minesweeper to javafx.fxml;
+    opens org.example.game_library.networking.server to javafx.fxml;
+    exports org.example.game_library.networking.server;
+    opens org.example.game_library.networking.client to javafx.fxml;
+    exports org.example.game_library.networking.client;
+    exports org.example.game_library.networking.server.tictactoe_game_logic;
+    opens org.example.game_library.networking.server.tictactoe_game_logic to javafx.fxml;
 }

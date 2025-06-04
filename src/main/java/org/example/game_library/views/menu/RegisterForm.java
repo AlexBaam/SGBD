@@ -1,7 +1,7 @@
 package org.example.game_library.views.menu;
 
 import javafx.scene.control.Alert;
-import org.example.game_library.networking.ClientToServerProxy;
+import org.example.game_library.networking.client.ClientToServerProxy;
 import org.example.game_library.utils.loggers.AppLogger;
 import org.example.game_library.utils.exceptions.NullData;
 import javafx.fxml.FXML;
