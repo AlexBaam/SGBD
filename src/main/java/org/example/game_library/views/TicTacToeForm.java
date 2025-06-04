@@ -73,8 +73,8 @@ public class TicTacToeForm {
         }
     }
 
-    @FXML
     private void onBackClick(ActionEvent event) {
+        logger.log(Level.INFO, "User pressed back button. (TicTacToe)");
         try {
             // Asigură-te că /org/example/game_library/FXML/mainMenuForm.fxml este calea corectă către ecranul la care vrei să te întorci
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/userDashboardForm.fxml"));
@@ -95,5 +95,20 @@ public class TicTacToeForm {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void onNewGameClick(ActionEvent event) {
+        logger.log(Level.INFO, "User pressed new game button. (TicTacToe)");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoeNewGameScreen.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("TicTacToe - New Game");
+            stage.show();
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Eroare", "Nu s-a putut încărca jocul TicTacToe.");
+        }
     }
 }
