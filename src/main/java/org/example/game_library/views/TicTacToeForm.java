@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.game_library.networking.ClientToServerProxy;
 import org.example.game_library.utils.loggers.AppLogger;
@@ -19,6 +21,9 @@ import java.util.logging.Logger;
 
 public class TicTacToeForm {
     private static final Logger logger = AppLogger.getLogger();
+
+    @FXML
+    private TextField usernameField;
 
     @FXML
     private Button scoreButton;
@@ -40,19 +45,47 @@ public class TicTacToeForm {
         }
     }
 
-    public void onScoreClick(ActionEvent event) {
+    public void onScoreClick(ActionEvent eventn) {
         logger.log(Level.INFO, "User pressed score button.");
+        try{
+            // Trimite comanda de ștergere către server
+            List<String> parameters = List.of("tictactoe", "score");
+            ClientToServerProxy.send(parameters);
 
+            // Așteaptă răspunsul de la server
+            String response = ClientToServerProxy.receive();
+
+            logger.log(Level.INFO, "Received delete account response from server: {0}", response);
+
+            if("SUCCESS".equals(response)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/scoreForm.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) eventn.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+            } else {
+                logger.log(Level.WARNING, "Login failed for user: {0}. Response: {1}", response);
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void onBackClick() {
+    @FXML
+    private void onBackClick(ActionEvent event) {
         try {
+            // Asigură-te că /org/example/game_library/FXML/mainMenuForm.fxml este calea corectă către ecranul la care vrei să te întorci
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/userDashboardForm.fxml"));
             Parent root = loader.load();
-           // Stage stage = (Stage) usernameField.getScene().getWindow();
-            //stage.setScene(new Scene(root));
+
+            // Utilizează evenimentul pentru a obține stage-ul curent, o practică mai bună
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            logger.log(Level.INFO, "Navigated back to main menu.");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            logger.log(Level.SEVERE, "Failed to load back screen: " + e.getMessage());
         }
     }
 
