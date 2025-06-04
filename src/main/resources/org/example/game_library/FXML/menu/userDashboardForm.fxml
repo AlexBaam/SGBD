@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.game_library.views.UserDashboardForm">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.game_library.views.UserDashboardForm">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="400.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" width="600.0">
          <fill>
@@ -36,18 +36,18 @@
       <Line endX="-90.0" endY="294.0" layoutX="234.0" layoutY="106.0" startX="-90.0" startY="-106.0" strokeWidth="4.0" />
       <VBox layoutY="315.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="141.0">
          <children>
-            <Button fx:id="deleteAccButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteAccClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@styles.css" text="Delete Acc" textAlignment="CENTER">
+            <Button fx:id="deleteAccButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteAccClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Delete Acc" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@styles.css" text="Logout" textAlignment="CENTER">
+            <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Logout" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
 
-            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onExitClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@styles.css" text="Exit">
+            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onExitClick" prefHeight="28.3" prefWidth="141.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Exit">
                <font>
                   <Font size="14.0" />
                </font>
@@ -60,7 +60,7 @@
                <children>
                   <ImageView fx:id="minesweeperButton" fitHeight="100.0" fitWidth="112.5" onMouseClicked="#onMinesweeperClick" pickOnBounds="true" styleClass="image-button">
                      <image>
-                        <Image url="@../images/minesweeper.png" />
+                        <Image url="@../../images/minesweeper.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
@@ -72,7 +72,7 @@
                <children>
                   <ImageView fx:id="tictactoeButton" fitHeight="100.0" fitWidth="112.5" onMouseClicked="#onTicTacToeClick" pickOnBounds="true" styleClass="image-button">
                      <image>
-                        <Image url="@../images/tictactoe.png" />
+                        <Image url="@../../images/tictactoe.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />

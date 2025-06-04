@@ -60,7 +60,7 @@ public class TicTacToeForm {
             logger.log(Level.INFO, "Received delete account response from server: {0}", response);
 
             if("SUCCESS".equals(response)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/scoreForm.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/scoreForm.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
@@ -80,7 +80,7 @@ public class TicTacToeForm {
         logger.log(Level.INFO, "User pressed back button. (TicTacToe)");
         try {
             // Asigură-te că /org/example/game_library/FXML/mainMenuForm.fxml este calea corectă către ecranul la care vrei să te întorci
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/userDashboardForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/userDashboardForm.fxml"));
             Parent root = loader.load();
 
             // Utilizează evenimentul pentru a obține stage-ul curent, o practică mai bună
@@ -103,7 +103,7 @@ public class TicTacToeForm {
     public void onNewGameClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed new game button. (TicTacToe)");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoeNewGameScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeNewGameScreen.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

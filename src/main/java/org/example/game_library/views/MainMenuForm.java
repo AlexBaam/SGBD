@@ -32,12 +32,12 @@ public class MainMenuForm {
 
     @FXML
     private void onLoginClick() throws IOException {
-        switchTo("loginForm.fxml");
+        switchTo("menu/loginForm.fxml");
     }
 
     @FXML
     private void onRegisterClick() throws IOException {
-        switchTo("registerForm.fxml");
+        switchTo("menu/registerForm.fxml");
     }
 
     @FXML

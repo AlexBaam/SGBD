@@ -30,7 +30,7 @@ public class ClientMain extends Application {
 
         // Load and display the main menu
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/mainMenuForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/mainMenuForm.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
             scene.setFill(Color.TRANSPARENT);

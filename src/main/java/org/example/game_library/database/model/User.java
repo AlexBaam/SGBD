@@ -32,10 +32,6 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -46,10 +42,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
     }
 
     public void setLoggedIn(boolean loggedIn) {

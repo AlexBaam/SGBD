@@ -52,7 +52,7 @@ public class UserDashboardForm {
                 logger.log(Level.INFO, "Logout successful! Navigating to login form.");
 
                 // 4. Navighează înapoi la ecranul de login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/loginForm.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/loginForm.fxml"));
                 Parent root = loader.load();
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -106,7 +106,7 @@ public class UserDashboardForm {
                 logger.log(Level.INFO, "Account deletion successful! Navigating to login form.");
 
                 // După ștergerea contului, navighează înapoi la ecranul de login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/loginForm.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/loginForm.fxml"));
                 Parent root = loader.load();
 
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -147,7 +147,7 @@ public class UserDashboardForm {
             logger.log(Level.INFO, "Received delete account response from server: {0}", response);
 
             if("SUCCESS".equals(response)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoeForm.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeForm.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
