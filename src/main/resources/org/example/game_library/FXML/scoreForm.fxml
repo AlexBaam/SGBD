@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.game_library.views.UserDashboardForm">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="400.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" width="600.0">
+            <fill>
+                <LinearGradient endX="0.7850378787878786" endY="0.7765151072632183" startX="0.049242422436222885" startY="0.011363643588441774">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="1.0" green="0.644444465637207" blue="0.644444465637207" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.6629629731178284" green="0.8090123534202576" blue="1.0" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <Line endX="-90.0" endY="294.0" layoutX="234.0" layoutY="106.0" startX="-90.0" startY="-106.0" strokeWidth="4.0" />
+        <VBox layoutY="315.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="141.0">
+            <children>
+                <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackClick" prefHeight="30.0" prefWidth="90.0" styleClass="transparent-button" text="Back">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <TilePane layoutX="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="455.0">
+            <children>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="112.5">
+                    <children>
+                        <ImageView fx:id="minesweeperButton" fitHeight="100.0" fitWidth="112.5" onMouseClicked="#onMinesweeperClick" pickOnBounds="true" styleClass="image-button">
+                            <image>
+                                <Image url="@../images/minesweeper.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                    </children>
+                </VBox>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="112.5">
+                    <children>
+                        <ImageView fx:id="tictactoeButton" fitHeight="100.0" fitWidth="112.5" onMouseClicked="#onTicTacToeClick" pickOnBounds="true" styleClass="image-button">
+                            <image>
+                                <Image url="@../images/tictactoe.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                    </children>
+                </VBox>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="112.5">
+                    <children>
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                </VBox>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="112.5">
+                    <children>
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                        <ImageView fitHeight="100.0" fitWidth="112.5" pickOnBounds="true" />
+                    </children>
+                </VBox>
+            </children>
+        </TilePane>
+    </children>
+</AnchorPane>

@@ -78,12 +78,9 @@ public class UserDashboardForm {
 
     @FXML
     public void onExitClick(ActionEvent event) {
-        // La închiderea aplicației, ar trebui să trimiți și o comandă de EXIT către server
-        // pentru a închide thread-ul corespunzător și a deconecta utilizatorul.
         logger.log(Level.INFO, "User pressed exit button.");
         try {
             ClientToServerProxy.send(List.of("exit"));
-            // Nu așteptăm un răspuns aici, deoarece aplicația se închide.
         } catch (IOException e) {
             logger.log(Level.WARNING, "Could not send exit command to server: {0}", e.getMessage());
         } finally {
@@ -165,7 +162,6 @@ public class UserDashboardForm {
         }
     }
 
-    // Metodă helper pentru afișarea alertelor
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
