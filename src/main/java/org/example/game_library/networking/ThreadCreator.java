@@ -232,10 +232,28 @@ public class ThreadCreator extends Thread {
     }
 
     private void handleTicTacToe(List<String> request) throws IOException {
-        if(request.size() != 1){
-            output.writeObject("Wrong arguments for TicTacToe!");
-        } else {
+        if(request.size() == 1) {
             output.writeObject("SUCCESS");
+        } else if(request.size() >= 2) {
+            String commandTicTacToe = request.get(1);
+            CommandTicTacToe cTTT = CommandTicTacToe.fromString(commandTicTacToe);
+
+            if(cTTT == null) {
+                output.writeObject("TicTacToe command is null! Command: " + commandTicTacToe);
+                return;
+            }
+
+            switch (cTTT) {
+                case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);
+                case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this, output, input);
+                case SCORE -> TicTacToeRequests.handleScore(request,this, output, input);
+                case FORFEIT -> TicTacToeRequests.handleForfeit(request,this, output, input);
+                case MOVE -> TicTacToeRequests.handleMove(request, this, output, input);
+                case EXIT -> handleExit(request);
+                default -> output.writeObject("Command " + request.get(1) + " not yet implemented!");
+            }
+        } else {
+            output.writeObject("FAILURE");
         }
     }
 }
