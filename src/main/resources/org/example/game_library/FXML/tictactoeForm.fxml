@@ -47,7 +47,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <VBox layoutX="300.0" layoutY="394.0" prefHeight="200.0" prefWidth="200.0">
+      <VBox layoutX="300.0" layoutY="394.0" prefHeight="250.0" prefWidth="200.0">
          <children>
             <Button fx:id="newGameButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="New Game">
                <font>
@@ -60,6 +60,11 @@
                </font>
             </Button>
             <Button fx:id="scoreboardButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Scoreboard">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Back">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
