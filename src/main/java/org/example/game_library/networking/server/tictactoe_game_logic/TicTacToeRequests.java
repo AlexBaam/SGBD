@@ -1,17 +1,20 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
+import org.example.game_library.database.dao.UserDAO; // Importă UserDAO
 import org.example.game_library.networking.server.ThreadCreator;
 import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Level; // Adaugă import pentru Level
+import java.util.logging.Logger; // Adaugă import pentru Logger
 
 public class TicTacToeRequests {
-    private static final Logger logger = AppLogger.getLogger();
+    private static final Logger logger = AppLogger.getLogger(); // Adaugă logger
 
     public static void handleNewGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
         try{
@@ -34,21 +37,30 @@ public class TicTacToeRequests {
     }
 
     public static void handleLoadGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        // Implementează logica pentru încărcarea jocului
+        try {
+            output.writeObject("FAILURE: Load game not implemented.");
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error sending load game response: " + e.getMessage());
+        }
     }
 
     public static void handleScore(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
-        if(request.size() == 2) {
+        UserDAO userDAO = new UserDAO();
+        try {
+            // Vom cere top 3 rank-uri, conform cerinței tale
+            List<ScoreEntry> topPlayers = userDAO.getTicTacToeTopRankedPlayers(3); // Obține top 3 rank-uri
+            output.writeObject(topPlayers); // Trimite lista de ScoreEntry-uri către client
+            logger.log(Level.INFO, "Sent TicTacToe top ranked players to client.");
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Database error retrieving TicTacToe scores: " + e.getMessage());
             try {
-                output.writeObject("SUCCESS");
-            } catch (IOException e) {
-                System.err.println("Error writing to output stream: " + e.getMessage());
+                output.writeObject("ERROR: Database error retrieving scores."); // Trimite un mesaj de eroare
+            } catch (IOException ioException) {
+                logger.log(Level.SEVERE, "Error sending database error to client: " + ioException.getMessage());
             }
-        } else {
-            try {
-                output.writeObject("FALS");
-            } catch (IOException e) {
-                System.err.println("Error writing to output stream: " + e.getMessage());
-            }
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error sending scores to client: " + e.getMessage());
         }
     }
 
