@@ -1,7 +1,10 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.server;
 
 import org.example.game_library.database.model.User;
 import org.example.game_library.database.dao.UserDAO;
+import org.example.game_library.networking.enums.Command;
+import org.example.game_library.networking.enums.CommandTicTacToe;
+import org.example.game_library.networking.server.tictactoe_game_logic.TicTacToeRequests;
 import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.*;
@@ -244,9 +247,11 @@ public class ThreadCreator extends Thread {
                 }
 
                 switch (cTTT) {
-                    case NEWGAME -> TicTacToeRequests.handleNewGame(request, this);
-                    case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this);
-                    case SCORE -> TicTacToeRequests.handleScore(request,this);
+                    case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);
+                    case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this, output, input);
+                    case SCORE -> TicTacToeRequests.handleScore(request,this, output, input);
+                    case FORFEIT -> TicTacToeRequests.handleForfeit(request,this, output, input);
+                    case MOVE -> TicTacToeRequests.handleMove(request, this, output, input);
                     case EXIT -> handleExit(request);
                     default -> output.writeObject("Command " + request.get(1) + " not yet implemented!");
                 }

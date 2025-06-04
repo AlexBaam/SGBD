@@ -1,4 +1,4 @@
-package org.example.game_library.views;
+package org.example.game_library.views.menu;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,12 +32,12 @@ public class MainMenuForm {
 
     @FXML
     private void onLoginClick() throws IOException {
-        switchTo("loginForm.fxml");
+        switchTo("menu/loginForm.fxml");
     }
 
     @FXML
     private void onRegisterClick() throws IOException {
-        switchTo("registerForm.fxml");
+        switchTo("menu/registerForm.fxml");
     }
 
     @FXML

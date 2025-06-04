@@ -1,4 +1,4 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.server;
 
 import org.example.game_library.utils.loggers.AppLogger;
 

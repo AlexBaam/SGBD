@@ -1,7 +1,7 @@
-package org.example.game_library.views;
+package org.example.game_library.views.menu;
 
 import javafx.scene.control.Alert;
-import org.example.game_library.networking.ClientToServerProxy;
+import org.example.game_library.networking.client.ClientToServerProxy;
 import org.example.game_library.utils.loggers.AppLogger;
 import org.example.game_library.utils.exceptions.NullData;
 import javafx.fxml.FXML;
@@ -104,7 +104,7 @@ public class RegisterForm {
     @FXML
     private void onBackClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/mainMenuForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/mainMenuForm.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));

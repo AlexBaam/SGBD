@@ -1,7 +1,7 @@
-package org.example.game_library.views;
+package org.example.game_library.views.menu;
 
 import javafx.scene.control.Alert;
-import org.example.game_library.networking.ClientToServerProxy;
+import org.example.game_library.networking.client.ClientToServerProxy;
 import org.example.game_library.utils.loggers.AppLogger;
 import org.example.game_library.utils.exceptions.NullData;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class LoginForm {
             if ("SUCCESS".equals(response)) {
                 showAlert(Alert.AlertType.INFORMATION, "Login successful", "User successfully logged in.");
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                        .getResource("/org/example/game_library/FXML/userDashboardForm.fxml"));
+                        .getResource("/org/example/game_library/FXML/menu/userDashboardForm.fxml"));
                 Parent root = fxmlLoader.load();
                 Stage stage = (Stage) usernameField.getScene().getWindow();
                 stage.setScene(new Scene(root));
@@ -88,7 +88,7 @@ public class LoginForm {
     @FXML
     private void onBackClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/mainMenuForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/mainMenuForm.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));

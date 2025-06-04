@@ -1,4 +1,4 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.client;
 
 import lombok.Getter;
 

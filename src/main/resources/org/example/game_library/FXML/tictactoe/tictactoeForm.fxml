@@ -13,8 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.game_library.views.MinesweeperForm">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.game_library.views.tictactoe.TicTacToeForm">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" width="800.0">
          <fill>
@@ -38,34 +37,39 @@
          <children>
             <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true">
                <image>
-                  <Image url="@../images/minesweeper.png" />
+                  <Image url="@../../images/tictactoe.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <Label alignment="CENTER" layoutX="300.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="200.0" text="Minesweeper" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="300.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="200.0" text="Tic Tac Toe" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <VBox layoutX="300.0" layoutY="394.0" prefHeight="200.0" prefWidth="200.0">
+      <VBox layoutX="300.0" layoutY="394.0" prefHeight="250.0" prefWidth="200.0">
          <children>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="New Game">
+            <Button fx:id="newGameButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="New Game">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Load Game">
+            <Button fx:id="loadGameButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Load Game">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Scoreboard">
+            <Button fx:id="scoreboardButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onScoreClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Scoreboard">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Exit">
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Back">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onExitClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Exit">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

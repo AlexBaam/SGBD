@@ -137,7 +137,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.example.game_library/org.example.game_library.networking.ServerMain</mainClass>
+                            <mainClass>org.example.game_library/org.example.game_library.networking.server.ServerMain</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

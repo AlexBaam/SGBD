@@ -1,11 +1,13 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.enums;
 
 public enum CommandTicTacToe {
 
     NEWGAME("newgame"),
     LOADGAME("loadgame"),
     SCORE("score"),
-    EXIT("exit");
+    EXIT("exit"),
+    FORFEIT("forfeit"),
+    MOVE("move");
 
     private final String commandTicTacToe;
 
