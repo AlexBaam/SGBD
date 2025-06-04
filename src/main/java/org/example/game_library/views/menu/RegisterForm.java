@@ -1,4 +1,4 @@
-package org.example.game_library.views;
+package org.example.game_library.views.menu;
 
 import javafx.scene.control.Alert;
 import org.example.game_library.networking.ClientToServerProxy;

@@ -37,3 +37,28 @@
     -fx-scale-y: 1.05;
     -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.5), 8, 0.0, 0, 4); /* shadow mai accentuat */
 }
+
+.tictactoe-cell {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 150px;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+/* Hover effect (opțional) */
+.tictactoe-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Pressed effect */
+.tictactoe-cell:pressed {
+    -fx-background-color: #d0d0d0;
+}

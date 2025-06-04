@@ -1,4 +1,4 @@
-package org.example.game_library.views;
+package org.example.game_library.views.tictactoe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

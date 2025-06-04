@@ -1,4 +1,4 @@
-package org.example.game_library.networking;
+package org.example.game_library.networking.enums;
 
 public enum Command {
 

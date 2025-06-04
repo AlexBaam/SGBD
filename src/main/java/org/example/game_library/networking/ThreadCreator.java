@@ -2,6 +2,8 @@ package org.example.game_library.networking;
 
 import org.example.game_library.database.model.User;
 import org.example.game_library.database.dao.UserDAO;
+import org.example.game_library.networking.enums.Command;
+import org.example.game_library.networking.enums.CommandTicTacToe;
 import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.*;

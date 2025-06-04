@@ -21,6 +21,15 @@ module org.example.game_library {
     exports org.example.game_library.networking;
     opens org.example.game_library.networking to javafx.fxml;
 
-    exports org.example.game_library.views;
-    opens org.example.game_library.views to javafx.fxml;
+    exports org.example.game_library.networking.enums;
+    opens org.example.game_library.networking.enums to javafx.fxml;
+
+    exports org.example.game_library.views.tictactoe;
+    opens org.example.game_library.views.tictactoe to javafx.fxml;
+
+    exports org.example.game_library.views.menu;
+    opens org.example.game_library.views.menu to javafx.fxml;
+
+    exports org.example.game_library.views.minesweeper;
+    opens org.example.game_library.views.minesweeper to javafx.fxml;
 }
