@@ -16,7 +16,9 @@ public class TicTacToeRequests {
     public static void handleNewGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
         try{
             if (request.size() >= 3 && "local".equalsIgnoreCase(request.get(2))) {
+                threadCreator.setTicTacToeGame(new TicTacToeGame());
                 output.writeObject("SUCCESS");
+                logger.log(Level.INFO, "New local game started for thread: {0}", threadCreator.getId());
             } else if(request.size() >= 3 && "player".equalsIgnoreCase(request.get(2))) {
                 output.writeObject("SUCCESS");
             } else if (request.size() >= 3 && "ai".equalsIgnoreCase(request.get(2))) {
@@ -65,5 +67,60 @@ public class TicTacToeRequests {
     }
 
     public static void handleMove(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        try {
+            if(request.size() < 5) {
+                output.writeObject("FAILURE: Invalid move request format!");
+                return;
+            }
+
+            int row = Integer.parseInt(request.get(2));;
+            int col = Integer.parseInt(request.get(3));;
+            String symbol = request.get(4).toUpperCase();
+
+            TicTacToeGame game = threadCreator.getTicTacToeGame();
+
+            if(game == null) {
+                output.writeObject("FAILURE: No active game session!");
+                return;
+            }
+
+            if(!symbol.equals("X") && !symbol.equals("O")) {
+                output.writeObject("FAILURE: Invalid symbol! Must be X or O!");
+                return;
+            }
+
+            if(!symbol.equals(String.valueOf(game.getCurrentSymbol()))) {
+                output.writeObject("FAILURE: Wait for your turn!");
+                return;
+            }
+
+            boolean moveResult = game.makeMove(row, col, symbol);
+
+            if(!moveResult) {
+                output.writeObject("FAILURE: Move failed! Cell already occupied!");
+                return;
+            }
+
+            if(game.checkWin()){
+                output.writeObject("WIN: " + symbol);
+                game.resetGame();
+                return;
+            }
+
+            if(game.isBoardFull()){
+                output.writeObject("DRAW!");
+                game.resetGame();
+                return;
+            }
+
+            game.togglePlayer();
+            output.writeObject("SUCCESS");
+        } catch (IOException | NumberFormatException e) {
+            try {
+                output.writeObject("FAILURE: " + e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

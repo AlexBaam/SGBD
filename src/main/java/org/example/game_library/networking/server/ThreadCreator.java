@@ -4,6 +4,7 @@ import org.example.game_library.database.model.User;
 import org.example.game_library.database.dao.UserDAO;
 import org.example.game_library.networking.enums.Command;
 import org.example.game_library.networking.enums.CommandTicTacToe;
+import org.example.game_library.networking.server.tictactoe_game_logic.TicTacToeGame;
 import org.example.game_library.networking.server.tictactoe_game_logic.TicTacToeRequests;
 import org.example.game_library.utils.loggers.AppLogger;
 
@@ -27,6 +28,8 @@ public class ThreadCreator extends Thread {
     private boolean logged = false;
     private int currentUserId = -1; // Ptr utilizator mai tarziu
     private String currentUserName;
+
+    private TicTacToeGame ticTacToeGame;
 
     public ThreadCreator(Socket socket) {
         this.clientSocket = socket;
@@ -258,5 +261,13 @@ public class ThreadCreator extends Thread {
         } else {
             output.writeObject("FAILURE");
         }
+    }
+
+    public void setTicTacToeGame(TicTacToeGame ticTacToeGame) {
+        this.ticTacToeGame = ticTacToeGame;
+    }
+
+    public TicTacToeGame getTicTacToeGame() {
+        return ticTacToeGame;
     }
 }

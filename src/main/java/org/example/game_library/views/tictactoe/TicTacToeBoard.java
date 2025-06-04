@@ -35,14 +35,29 @@ public class TicTacToeBoard {
         Integer row = GridPane.getRowIndex(clicked);
         Integer col = GridPane.getColumnIndex(clicked);
 
-        if (row == null) row = 0;
-        if (col == null) col = 0;
+        if (row == null) {
+            row = 0;
+        }
+
+        if (col == null) {
+            col = 0;
+        }
 
         ClientToServerProxy.send(List.of("tictactoe", "move", row.toString(), col.toString(), currentSymbol));
 
         String response = ClientToServerProxy.receive();
 
-        if ("SUCCESS".equals(response)) {
+        if (response.startsWith("WIN:")) {
+            clicked.setText(currentSymbol);
+            clicked.setDisable(true);
+            showAlert(Alert.AlertType.INFORMATION, "Game Over", "Player " + currentSymbol + " wins!");
+            returnToNewGameScreen(event);
+        } else if ("DRAW!".equalsIgnoreCase(response)) {
+            clicked.setText(currentSymbol);
+            clicked.setDisable(true);
+            showAlert(Alert.AlertType.INFORMATION, "Game Over", "It's a draw!");
+            returnToNewGameScreen(event);
+        } else if ("SUCCESS".equalsIgnoreCase(response)) {
             clicked.setText(currentSymbol);
             clicked.setDisable(true);
             togglePlayer();
@@ -114,5 +129,19 @@ public class TicTacToeBoard {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private void returnToNewGameScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeNewGameScreen.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("TicTacToe - New Game");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Couldn't go back to new game screen.");
+        }
     }
 }
