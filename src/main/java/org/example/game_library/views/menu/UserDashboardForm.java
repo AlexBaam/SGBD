@@ -42,7 +42,7 @@ public class UserDashboardForm {
             ClientToServerProxy.send(parameters);
 
             // 2. Așteaptă răspunsul de la server
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             logger.log(Level.INFO, "Received logout response from server: {0}", response);
 
@@ -97,7 +97,7 @@ public class UserDashboardForm {
             ClientToServerProxy.send(parameters);
 
             // Așteaptă răspunsul de la server
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             logger.log(Level.INFO, "Received delete account response from server: {0}", response);
 
@@ -142,7 +142,7 @@ public class UserDashboardForm {
             ClientToServerProxy.send(parameters);
 
             // Așteaptă răspunsul de la server
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             logger.log(Level.INFO, "Received delete account response from server: {0}", response);
 

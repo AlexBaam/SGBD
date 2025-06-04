@@ -52,7 +52,7 @@ public class LoginForm {
 
             ClientToServerProxy.send(parameters);
 
-            String response = ClientToServerProxy.receive(); // Aici primesc SUCCESS sau mesajul de eroare
+            String response = (String) ClientToServerProxy.receive(); // Aici primesc SUCCESS sau mesajul de eroare
 
             logger.log(Level.INFO, "Received response: {0}", response);
 

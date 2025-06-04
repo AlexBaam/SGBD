@@ -23,7 +23,7 @@ public class TicTacToeNewGameScreen {
         try {
             List<String> request = List.of("tictactoe", "newgame", "ai");
             ClientToServerProxy.send(request);
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             if ("SUCCESS".equalsIgnoreCase(response)) {
                 logger.log(Level.INFO, "New local game initialized successfully.");
@@ -49,7 +49,7 @@ public class TicTacToeNewGameScreen {
         try {
             List<String> request = List.of("tictactoe", "newgame", "local");
             ClientToServerProxy.send(request);
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             if ("SUCCESS".equalsIgnoreCase(response)) {
                 logger.log(Level.INFO, "New local game initialized successfully.");
@@ -75,7 +75,7 @@ public class TicTacToeNewGameScreen {
         try {
             List<String> request = List.of("tictactoe", "newgame", "player");
             ClientToServerProxy.send(request);
-            String response = ClientToServerProxy.receive();
+            String response = (String) ClientToServerProxy.receive();
 
             if ("SUCCESS".equalsIgnoreCase(response)) {
                 logger.log(Level.INFO, "New local game initialized successfully.");

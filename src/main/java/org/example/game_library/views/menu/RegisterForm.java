@@ -83,7 +83,7 @@ public class RegisterForm {
 
                 ClientToServerProxy.send(parameters);
 
-                String response = ClientToServerProxy.receive();
+                String response = (String) ClientToServerProxy.receive();
 
                 logger.log(Level.INFO, "Received response: {0}", response);
 

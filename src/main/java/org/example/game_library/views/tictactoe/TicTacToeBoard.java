@@ -36,7 +36,7 @@ public class TicTacToeBoard {
 
         ClientToServerProxy.send(List.of("tictactoe", "move", row.toString(), col.toString(), currentSymbol));
 
-        String response = ClientToServerProxy.receive();
+        String response = (String) ClientToServerProxy.receive();
 
         if ("SUCCESS".equals(response)) {
             clicked.setText(currentSymbol);
