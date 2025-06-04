@@ -14,6 +14,7 @@ module org.example.game_library {
     requires static lombok;
     requires jbcrypt;
     requires com.zaxxer.hikari;
+    requires jdk.jdi;
 
     exports org.example.game_library.database.model;
     opens org.example.game_library.database.model;

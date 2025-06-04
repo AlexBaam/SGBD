@@ -273,4 +273,7 @@ public class ThreadCreator extends Thread {
         return ticTacToeGame;
     }
 
+    public int getCurrentUserId() {
+        return currentUserId;
+    }
 }

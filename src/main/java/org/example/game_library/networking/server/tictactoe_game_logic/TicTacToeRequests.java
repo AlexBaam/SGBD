@@ -1,5 +1,6 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
+import org.example.game_library.database.dao.TicTacToeDAO;
 import org.example.game_library.database.dao.UserDAO; // Importă UserDAO
 import org.example.game_library.networking.server.ThreadCreator;
 import org.example.game_library.utils.loggers.AppLogger;
@@ -113,9 +114,15 @@ public class TicTacToeRequests {
             }
 
             if(game.checkWin()){
-                output.writeObject("WIN: " + symbol);
-                game.resetGame();
-                return;
+                try{
+                    int winnerId = threadCreator.getCurrentUserId();
+                    TicTacToeDAO.incrementWins(winnerId);
+                    output.writeObject("WIN: " + symbol);
+                    game.resetGame();
+                    return;
+                } catch (SQLException e) {
+                    logger.log(Level.SEVERE, "SQL exception met: {0}", e.getMessage());
+                }
             }
 
             if(game.isBoardFull()){
