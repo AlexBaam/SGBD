@@ -20,6 +20,19 @@ public class TicTacToeRequests {
     }
 
     public static void handleScore(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        if(request.size() == 2) {
+            try {
+                output.writeObject("SUCCESS");
+            } catch (IOException e) {
+                System.err.println("Error writing to output stream: " + e.getMessage());
+            }
+        } else {
+            try {
+                output.writeObject("FALS");
+            } catch (IOException e) {
+                System.err.println("Error writing to output stream: " + e.getMessage());
+            }
+        }
     }
 
     public static void handleForfeit(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
