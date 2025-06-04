@@ -1,18 +1,16 @@
 package org.example.game_library.networking;
 
 import org.example.game_library.database.model.User;
-import org.example.game_library.database.repository.UserRepository;
-import org.example.game_library.utils.jpa.JPAUtils;
+import org.example.game_library.database.dao.UserDAO;
 import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.*;
 import java.net.*;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.*;
 
-
 import jakarta.persistence.PersistenceException;
-import javax.security.auth.login.LoginException;
 
 public class ThreadCreator extends Thread {
     private final Socket clientSocket;
@@ -136,8 +134,8 @@ public class ThreadCreator extends Thread {
         String username = request.get(2);
         String password = request.get(3);
 
-        UserRepository repo = new UserRepository(JPAUtils.getEntityManager());
-        User user = repo.registration(email, username, password);
+        UserDAO userRepo = new UserDAO();
+        User user = userRepo.registration(email, username, password);
 
         if (user != null) {
             output.writeObject("SUCCESS");
@@ -155,7 +153,7 @@ public class ThreadCreator extends Thread {
         String username = request.get(1);
         String password = request.get(2);
 
-        UserRepository userRepo = new UserRepository(JPAUtils.getEntityManager());
+        UserDAO userRepo = new UserDAO();
         try {
             User user = userRepo.authenticate(username, password);
             logged = true; // Marchează sesiunea ca autentificată
@@ -166,10 +164,6 @@ public class ThreadCreator extends Thread {
             // Prindem excepția specifică de login (inclusiv "deja conectat")
             logger.log(Level.INFO, "Login failed for user {0}: {1}", new Object[]{username, e.getMessage()});
             output.writeObject(e.getMessage()); // Trimite mesajul de eroare clientului
-        } catch (PersistenceException e) {
-            // Prindem alte erori de persistență care nu sunt direct legate de login logică (e.g., probleme cu DB)
-            logger.log(Level.SEVERE, "Database error during login for user {0}: {1}", new Object[]{username, e.getMessage()});
-            output.writeObject("Eroare de bază de date la autentificare.");
         }
     }
 
@@ -180,7 +174,7 @@ public class ThreadCreator extends Thread {
             return;
         }
 
-        UserRepository userRepo = new UserRepository(JPAUtils.getEntityManager());
+        UserDAO userRepo = new UserDAO();
         try {
             boolean success = userRepo.deleteUserByUsername(currentUserName);
             if (success) {
@@ -207,7 +201,7 @@ public class ThreadCreator extends Thread {
             return;
         }
 
-        UserRepository userRepo = new UserRepository(JPAUtils.getEntityManager());
+        UserDAO userRepo = new UserDAO();
         try {
             boolean success = userRepo.updateUserLoggedInStatus(currentUserName, false); // Setează logged_in la FALSE
             if (success) {
@@ -220,13 +214,12 @@ public class ThreadCreator extends Thread {
                 output.writeObject("Eroare la deconectare. Vă rugăm să încercați din nou.");
                 logger.log(Level.WARNING, "Failed to update logged_in status to FALSE for user {0}.", currentUserName);
             }
-        } catch (PersistenceException e) {
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Database error during logout for user {0}: {1}", new Object[]{currentUserName, e.getMessage()});
             // Trigger-ul de logout nu ar trebui să arunce excepții, dar prindem orice eroare de DB
             output.writeObject("Eroare de bază de date la deconectare: " + e.getMessage());
         }
     }
-
 
     private void handleExit(List<String> request) throws IOException {
         handleLogout(request);
