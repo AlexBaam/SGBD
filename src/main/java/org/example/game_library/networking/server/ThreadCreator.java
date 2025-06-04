@@ -238,13 +238,13 @@ public class ThreadCreator extends Thread {
         if(request.size() == 1) {
             output.writeObject("SUCCESS");
         } else if(request.size() >= 2) {
-                String commandTicTacToe = request.get(1);
-                CommandTicTacToe cTTT = CommandTicTacToe.fromString(commandTicTacToe);
+            String commandTicTacToe = request.get(1);
+            CommandTicTacToe cTTT = CommandTicTacToe.fromString(commandTicTacToe);
 
-                if(cTTT == null) {
-                    output.writeObject("TicTacToe command is null! Command: " + commandTicTacToe);
-                    return;
-                }
+            if(cTTT == null) {
+                output.writeObject("TicTacToe command is null! Command: " + commandTicTacToe);
+                return;
+            }
 
                 switch (cTTT) {
                     case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);

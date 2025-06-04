@@ -33,7 +33,6 @@ public class TicTacToeForm {
     @FXML
     private Button backButton;
 
-
     @FXML
     public void onExitClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed exit button.");
@@ -57,7 +56,7 @@ public class TicTacToeForm {
             // Așteaptă răspunsul de la server
             String response = ClientToServerProxy.receive();
 
-            logger.log(Level.INFO, "Received delete account response from server: {0}", response);
+            logger.log(Level.INFO, "Received scoreboard response from server: {0} (TicTacToe)", response);
 
             if("SUCCESS".equals(response)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/scoreForm.fxml"));
@@ -65,7 +64,7 @@ public class TicTacToeForm {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
             } else {
-                logger.log(Level.WARNING, "Login failed for user: {0}. Response: {1}", response);
+                logger.log(Level.WARNING, "Scoreboard loading failed: {0}", response);
             }
 
         } catch (ClassNotFoundException e) {
