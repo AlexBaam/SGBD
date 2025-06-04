@@ -38,4 +38,5 @@ module org.example.game_library {
 
     exports org.example.game_library.networking.server.tictactoe_game_logic;
     opens org.example.game_library.networking.server.tictactoe_game_logic to javafx.fxml;
+
 }

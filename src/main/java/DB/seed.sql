@@ -1,4 +1,4 @@
-DROP VIEW IF EXISTS top10_tictactoe;
+DROP VIEW IF EXISTS top10_tictactoe; -- Acum că folosim funcția nouă, putem șterge view-ul vechi
 DROP VIEW IF EXISTS top10_minesweeper;
 
 DROP TABLE IF EXISTS saved_games;
@@ -37,6 +37,7 @@ CREATE TABLE saved_games (
                              FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Refacem view-urile pentru cazul în care ele sunt folosite altundeva (minesweeper)
 CREATE VIEW top10_minesweeper AS
 SELECT u.username, ms.best_score
 FROM minesweeper_scores ms
@@ -45,28 +46,78 @@ WHERE ms.best_score > 0
 ORDER BY ms.best_score ASC
     LIMIT 10;
 
-CREATE VIEW top10_tictactoe AS
-SELECT u.username, tts.total_wins
-FROM tictactoe_scores tts
-         JOIN users u ON u.user_id = tts.user_id
-ORDER BY tts.total_wins DESC
-    LIMIT 10;
+-- Funcție pentru un singur utilizator (dacă mai este necesară)
+CREATE OR REPLACE FUNCTION get_user_tictactoe_rank_manual(p_user_id INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+v_user_wins INTEGER;
+    v_rank INTEGER;
+BEGIN
+SELECT total_wins INTO v_user_wins
+FROM tictactoe_scores
+WHERE user_id = p_user_id;
+
+IF v_user_wins IS NULL THEN
+        RETURN NULL;
+END IF;
+
+SELECT COUNT(DISTINCT total_wins) + 1 INTO v_rank
+FROM tictactoe_scores
+WHERE total_wins > v_user_wins;
+
+RETURN v_rank;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_tictactoe_top_ranked_players(p_top_ranks INTEGER)
+RETURNS TABLE (
+    rank_nr BIGINT, -- Aici trebuie să fie BIGINT
+    username VARCHAR(50),
+    games_played INTEGER
+) AS $$
+BEGIN
+RETURN QUERY
+    WITH RankedScores AS (
+        SELECT
+            u.username,
+            tts.total_wins AS games_played,
+            DENSE_RANK() OVER (ORDER BY tts.total_wins DESC) as current_rank
+        FROM
+            tictactoe_scores tts
+        JOIN
+            users u ON u.user_id = tts.user_id
+    )
+SELECT
+    rs.current_rank,
+    rs.username,
+    rs.games_played
+FROM
+    RankedScores rs
+WHERE
+    rs.current_rank <= p_top_ranks
+ORDER BY
+    rs.current_rank ASC, rs.games_played DESC, rs.username ASC;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
 
 CREATE OR REPLACE FUNCTION check_email_and_username_uniqueness()
 RETURNS TRIGGER AS $$
 DECLARE
 v_email_existent INTEGER;
-v_username_existent INTEGER;
+    v_username_existent INTEGER;
 BEGIN
-
 SELECT COUNT(*) INTO v_email_existent FROM users WHERE email = NEW.email;
 IF v_email_existent > 0 THEN
-RAISE EXCEPTION 'Email already exists: %', NEW.email;
+        RAISE EXCEPTION 'Email already exists: %', NEW.email;
 END IF;
 
 SELECT COUNT(*) INTO v_username_existent FROM users WHERE username = NEW.username;
 IF v_username_existent > 0 THEN
-    RAISE EXCEPTION 'Username already exists: %', NEW.username;
+        RAISE EXCEPTION 'Username already exists: %', NEW.username;
 END IF;
 
 RETURN NEW;
@@ -99,47 +150,15 @@ CREATE TRIGGER trigger_log_user_deletion
     FOR EACH ROW
     EXECUTE FUNCTION log_user_deletion();
 
-CREATE OR REPLACE FUNCTION get_user_tictactoe_rank_manual(p_user_id INTEGER)
-RETURNS INTEGER AS $$
-DECLARE
-v_user_wins INTEGER;
-    v_rank INTEGER;
-BEGIN
-    -- 1. Obținem numărul de victorii al utilizatorului specificat
-SELECT total_wins INTO v_user_wins
-FROM tictactoe_scores
-WHERE user_id = p_user_id;
-
--- Dacă utilizatorul nu are victorii sau nu există, îi dăm un rang "nedefinit" (sau 0, în funcție de logica ta)
--- sau putem arunca o excepție, dacă e cazul.
-IF v_user_wins IS NULL THEN
-        RETURN NULL; -- Sau o altă valoare care indică faptul că nu a fost găsit
-END IF;
-
-    -- 2. Calculăm rangul: numărăm câți utilizatori au mai multe victorii
-    -- și adăugăm 1 la rezultat.
-    -- (Acest lucru simulează comportamentul RANK() unde egalitățile primesc același loc,
-    -- dar locul următor este sărit - ex: 1, 2, 2, 4)
-SELECT COUNT(DISTINCT total_wins) + 1 INTO v_rank
-FROM tictactoe_scores
-WHERE total_wins > v_user_wins;
-
-RETURN v_rank;
-END;
-$$ LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION manage_user_login_and_sessions()
 RETURNS TRIGGER AS $$
 DECLARE
 BEGIN
-
     IF NEW.logged_in = TRUE AND OLD.logged_in = FALSE THEN
         RAISE NOTICE 'Utilizatorul "%" încearcă să se conecteze.', NEW.username;
-
     ELSIF NEW.logged_in = FALSE AND OLD.logged_in = TRUE THEN
         RAISE NOTICE 'Utilizatorul "%" încearcă să se deconecteze.', OLD.username;
         RAISE NOTICE 'Utilizatorul "%" s-a deconectat cu succes.', OLD.username;
-
     ELSIF OLD.logged_in = TRUE AND NEW.logged_in = TRUE THEN
         RAISE EXCEPTION 'Utilizatorul "%" este deja conectat!', OLD.username
         USING HINT = 'Nu poți seta logged_in la TRUE dacă este deja TRUE. Folosește o deconectare explicită (setând logged_in la FALSE) înainte de a te reconecta.';
@@ -152,3 +171,22 @@ CREATE OR REPLACE TRIGGER trg_manage_user_login_and_sessions
 BEFORE UPDATE OF logged_in ON users
     FOR EACH ROW
     EXECUTE FUNCTION manage_user_login_and_sessions();
+
+
+
+
+-- insert into tictactoe_scores (user_id, total_wins) values (0, 1);
+-- insert into tictactoe_scores (user_id, total_wins) values (1, 45);
+-- insert into tictactoe_scores (user_id, total_wins) values (2, 20);
+-- insert into tictactoe_scores (user_id, total_wins) values (3, 22);
+-- insert into tictactoe_scores (user_id, total_wins) values (4, 6);
+-- insert into tictactoe_scores (user_id, total_wins) values (5, 11);
+-- insert into tictactoe_scores (user_id, total_wins) values (6, 10);
+-- insert into tictactoe_scores (user_id, total_wins) values (7, 24);
+-- insert into tictactoe_scores (user_id, total_wins) values (8, 22);
+-- insert into tictactoe_scores (user_id, total_wins) values (9, 2);
+-- insert into tictactoe_scores (user_id, total_wins) values (10, 1);
+-- insert into tictactoe_scores (user_id, total_wins) values (11, 36);
+-- insert into tictactoe_scores (user_id, total_wins) values (12, 29);
+
+

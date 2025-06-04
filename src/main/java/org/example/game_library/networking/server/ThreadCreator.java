@@ -10,10 +10,12 @@ import org.example.game_library.utils.loggers.AppLogger;
 import java.io.*;
 import java.net.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
 
 import jakarta.persistence.PersistenceException;
+import org.example.game_library.networking.server.tictactoe_game_logic.ScoreEntry;
 
 public class ThreadCreator extends Thread {
     private final Socket clientSocket;
@@ -259,4 +261,5 @@ public class ThreadCreator extends Thread {
             output.writeObject("FAILURE");
         }
     }
+
 }

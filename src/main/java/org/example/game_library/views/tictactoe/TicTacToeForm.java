@@ -46,31 +46,22 @@ public class TicTacToeForm {
         }
     }
 
+    @FXML
     public void onScoreClick(ActionEvent event) {
-        logger.log(Level.INFO, "User pressed score button.");
-        try{
-            // Trimite comanda de ștergere către server
-            List<String> parameters = List.of("tictactoe", "score");
-            ClientToServerProxy.send(parameters);
+        logger.log(Level.INFO, "User pressed score button. Navigating to Scoreboard.");
+        try {
+            // ACUM NU MAI TRIMITI NICI O COMANDA AICI SI NU MAI ASTEPTI RASPUNS.
+            // Doar navighezi la pagina de scoruri. Pagina de scoruri se va ocupa singură de încărcarea datelor.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/scoreForm.fxml")); // Calea corectă către ScoreForm FXML
+            Parent root = loader.load();
 
-            // Așteaptă răspunsul de la server
-            String response = ClientToServerProxy.receive();
-
-            logger.log(Level.INFO, "Received scoreboard response from server: {0} (TicTacToe)", response);
-
-            if("SUCCESS".equals(response)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/scoreForm.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
-            } else {
-                logger.log(Level.WARNING, "Scoreboard loading failed: {0}", response);
-            }
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Game Library - Tic Tac Toe Scoreboard");
+            stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showAlert(Alert.AlertType.ERROR, "Eroare încărcare scoruri", "Nu s-a putut încărca ecranul de scoruri: " + e.getMessage());
+            logger.log(Level.SEVERE, "Failed to load scoreForm.fxml: " + e.getMessage());
         }
     }
 
@@ -78,16 +69,16 @@ public class TicTacToeForm {
     private void onBackClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed back button. (TicTacToe)");
         try {
-            // Asigură-te că /org/example/game_library/FXML/mainMenuForm.fxml este calea corectă către ecranul la care vrei să te întorci
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/userDashboardForm.fxml"));
+            // Calea corectă către userDashboardForm.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/userDashboardForm.fxml")); // Calea corectă
             Parent root = loader.load();
 
-            // Utilizează evenimentul pentru a obține stage-ul curent, o practică mai bună
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            logger.log(Level.INFO, "Navigated back to main menu.");
+            logger.log(Level.INFO, "Navigated back to user dashboard.");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to load back screen: " + e.getMessage());
+            logger.log(Level.SEVERE, "Failed to load back screen (user dashboard): " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Eroare de navigare", "Nu s-a putut întoarce la meniul principal.");
         }
     }
 

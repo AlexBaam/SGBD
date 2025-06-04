@@ -4,9 +4,12 @@ import org.example.game_library.database.model.User;
 import org.example.game_library.utils.DBUtils;
 import org.example.game_library.utils.exceptions.LoginException;
 import org.example.game_library.utils.loggers.AppLogger;
+import org.example.game_library.networking.server.tictactoe_game_logic.ScoreEntry;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,5 +120,26 @@ public class UserDAO {
         user.setPassword(rs.getString("password"));
         user.setLoggedIn(rs.getBoolean("logged_in"));
         return user;
+    }
+
+    public List<ScoreEntry> getTicTacToeTopRankedPlayers(int topRanks) throws SQLException {
+        List<ScoreEntry> topPlayers = new ArrayList<>();
+        // Apelăm funcția din baza de date
+        String sql = "SELECT rank_nr, username, games_played FROM get_tictactoe_top_ranked_players(?)";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, topRanks); // Setează numărul de rank-uri dorite
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int rank = rs.getInt("rank_nr");
+                String username = rs.getString("username");
+                int gamesPlayed = rs.getInt("games_played"); // Numele coloanei se potrivește cu funcția
+                topPlayers.add(new ScoreEntry(rank, username, gamesPlayed));
+            }
+        }
+        return topPlayers;
     }
 }
