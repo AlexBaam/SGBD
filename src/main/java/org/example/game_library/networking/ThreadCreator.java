@@ -232,6 +232,10 @@ public class ThreadCreator extends Thread {
     }
 
     private void handleTicTacToe(List<String> request) throws IOException {
-        //TODO
+        if(request.size() != 1){
+            output.writeObject("Wrong arguments for TicTacToe!");
+        } else {
+            output.writeObject("SUCCESS");
+        }
     }
 }
