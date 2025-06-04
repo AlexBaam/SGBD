@@ -31,6 +31,8 @@ public class TicTacToeForm {
     @FXML
     private Button exitButton;
 
+    @FXML
+    private Button backButton;
 
     @FXML
     public void onExitClick(ActionEvent event) {
@@ -73,6 +75,7 @@ public class TicTacToeForm {
         }
     }
 
+    @FXML
     private void onBackClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed back button. (TicTacToe)");
         try {
