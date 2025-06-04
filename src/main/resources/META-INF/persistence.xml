@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.0">
+
+    <!-- aici definim unitatea de persistenta -->
+    <persistence-unit name="GameLibraryPU">
+        <!-- aici definim providerul pentru JPA -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- JDBC connection properties -->
+        <properties>
+            <!-- setarile pentru conectarea la baza de date PostgreSQL -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/JavaProject"/>
+            <!-- numele utilizator -->
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <!-- parola utilizator -->
+            <property name="jakarta.persistence.jdbc.password" value="Alex0307"/>
+            <!-- driverul JDBC pt PostgreSQL -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+
+            <!-- Hibernate configuration -->
+
+            <!-- dialectul specific PostgreSQL (ca sa stie cum sa scrie SQL-ul corect pentru acest tip de baza de date) -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+            <!-- setare care zice ce sa faca Hibernate la pornire (none = nu modifica tabelele) -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- afiseaza interogarile SQL in consola (ajuta la sdebug) -->
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

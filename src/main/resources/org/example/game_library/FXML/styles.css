@@ -1,0 +1,39 @@
+/* Apply to all buttons */
+.transparent-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: black;
+    -fx-border-radius: 10;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-padding: 6 12;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Hover effect */
+.transparent-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Pressed effect */
+.transparent-button:pressed {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-translate-y: 1;
+}
+
+.image-button {
+    -fx-cursor: hand;              /* schimbă cursorul la pointer */
+    -fx-opacity: 1.0;              /* opacitate normală */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 5, 0.0, 0, 2); /* un mic shadow */
+    -fx-transition: all 0.3s ease; /* tranziție lină */
+}
+
+.image-button:hover {
+    -fx-opacity: 0.8;              /* ușor transparent la hover */
+    -fx-scale-x: 1.05;             /* mic zoom */
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.5), 8, 0.0, 0, 4); /* shadow mai accentuat */
+}
