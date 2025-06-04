@@ -52,8 +52,6 @@ FROM tictactoe_scores tts
 ORDER BY tts.total_wins DESC
     LIMIT 10;
 
-
-
 CREATE OR REPLACE FUNCTION check_email_and_username_uniqueness()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -65,7 +63,6 @@ SELECT COUNT(*) INTO v_email_existent FROM users WHERE email = NEW.email;
 IF v_email_existent > 0 THEN
 RAISE EXCEPTION 'Email already exists: %', NEW.email;
 END IF;
-
 
 SELECT COUNT(*) INTO v_username_existent FROM users WHERE username = NEW.username;
 IF v_username_existent > 0 THEN
@@ -81,7 +78,6 @@ CREATE TRIGGER validate_user_insert
     FOR EACH ROW
     EXECUTE FUNCTION check_email_and_username_uniqueness();
 
--- Trigger pentru a loga stergerea unui user
 CREATE TABLE user_deletion_log (
                                    log_id SERIAL PRIMARY KEY,
                                    user_id INTEGER,
@@ -102,7 +98,6 @@ CREATE TRIGGER trigger_log_user_deletion
     BEFORE DELETE ON users
     FOR EACH ROW
     EXECUTE FUNCTION log_user_deletion();
-
 
 CREATE OR REPLACE FUNCTION get_user_tictactoe_rank_manual(p_user_id INTEGER)
 RETURNS INTEGER AS $$
@@ -132,7 +127,6 @@ WHERE total_wins > v_user_wins;
 RETURN v_rank;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION manage_user_login_and_sessions()
 RETURNS TRIGGER AS $$
