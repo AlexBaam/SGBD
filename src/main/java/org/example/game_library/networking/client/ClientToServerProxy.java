@@ -31,9 +31,10 @@ public class ClientToServerProxy {
         out.flush();
     }
 
-    public static String receive() throws IOException, ClassNotFoundException {
-        return (String) in.readObject();
+    public static Object receive() throws IOException, ClassNotFoundException {
+        return in.readObject();
     }
+
 
     public static void close() throws IOException {
         if (out != null) out.close();
