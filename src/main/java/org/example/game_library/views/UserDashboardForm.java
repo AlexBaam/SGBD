@@ -150,7 +150,7 @@ public class UserDashboardForm {
             logger.log(Level.INFO, "Received delete account response from server: {0}", response);
 
             if("SUCCESS".equals(response)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("org/example/game_library/FXML/tictactoeForm.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoeForm.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
