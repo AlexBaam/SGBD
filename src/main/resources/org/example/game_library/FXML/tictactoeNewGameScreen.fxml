@@ -49,22 +49,22 @@
       </Label>
       <VBox layoutX="300.0" layoutY="432.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="vsAIButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. AI">
+            <Button fx:id="vsAIButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAIClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. AI">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="vsLocalButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. Local">
+            <Button fx:id="vsLocalButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OnLocalClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. Local">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="vsPlayerButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. Player">
+            <Button fx:id="vsPlayerButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OnPlayerClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Vs. Player">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Back">
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@styles.css" text="Back">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
