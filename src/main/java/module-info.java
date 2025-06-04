@@ -13,6 +13,7 @@ module org.example.game_library {
     requires jakarta.persistence;
     requires static lombok;
     requires jbcrypt;
+    requires com.zaxxer.hikari;
 
     exports org.example.game_library.database.model;
     opens org.example.game_library.database.model;
