@@ -70,7 +70,7 @@ public class TicTacToeForm {
         logger.log(Level.INFO, "User pressed back button. (TicTacToe)");
         try {
             // Calea corectă către userDashboardForm.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/userDashboardForm.fxml")); // Calea corectă
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/userDashboardForm.fxml")); // Calea corectă
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

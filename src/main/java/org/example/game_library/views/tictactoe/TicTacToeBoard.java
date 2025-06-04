@@ -91,7 +91,7 @@ public class TicTacToeBoard {
 
                     ClientToServerProxy.send(List.of("tictactoe", "forfeit"));
 
-                    String response = ClientToServerProxy.receive();
+                    String response =  (String) ClientToServerProxy.receive();
 
                     if ("SUCCESS".equals(response)) {
                         logger.log(Level.INFO, "Successfully forfeited the game.");
