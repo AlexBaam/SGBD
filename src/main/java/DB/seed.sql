@@ -152,3 +152,18 @@ CREATE OR REPLACE TRIGGER trg_manage_user_login_and_sessions
 BEFORE UPDATE OF logged_in ON users
     FOR EACH ROW
     EXECUTE FUNCTION manage_user_login_and_sessions();
+
+-- Trigger ptr pus automat si in celelalte tabele
+CREATE OR REPLACE FUNCTION create_score_entries_after_user_insert()
+RETURNS TRIGGER AS $$
+BEGIN
+INSERT INTO tictactoe_scores(user_id) VALUES (NEW.user_id);
+INSERT INTO minesweeper_scores(user_id) VALUES (NEW.user_id);
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_create_scores_after_user_insert
+    AFTER INSERT ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION create_score_entries_after_user_insert();
