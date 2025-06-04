@@ -23,14 +23,14 @@ CREATE TABLE game_types (
 CREATE TABLE tictactoe_scores (
     user_id INTEGER PRIMARY KEY,
     total_wins INTEGER DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE minesweeper_scores (
     user_id INTEGER PRIMARY KEY,
     total_wins INTEGER DEFAULT 0,
     best_score INTEGER DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE saved_games (
@@ -39,7 +39,7 @@ CREATE TABLE saved_games (
     game_type_id INTEGER NOT NULL,
     game_state JSONB NOT NULL,
     saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (game_type_id) REFERENCES game_types(game_type_id)
 );
 
@@ -134,6 +134,12 @@ RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+
+
+
+
+
+
 CREATE TRIGGER validate_user_insert
     BEFORE INSERT ON users
     FOR EACH ROW
@@ -152,6 +158,11 @@ CREATE TRIGGER trigger_log_user_deletion
     BEFORE DELETE ON users
     FOR EACH ROW
     EXECUTE FUNCTION log_user_deletion();
+
+
+
+
+
 
 CREATE OR REPLACE FUNCTION manage_user_login_and_sessions()
 RETURNS TRIGGER AS $$
