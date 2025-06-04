@@ -12,11 +12,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.game_library.networking.client.ClientToServerProxy;
+import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TicTacToeBoard {
+    private static final Logger logger = AppLogger.getLogger();
 
     private String currentSymbol = "X";
 
@@ -47,11 +51,14 @@ public class TicTacToeBoard {
         }
     }
 
+    @FXML
     public void onSaveClick(ActionEvent event) {
     }
 
     @FXML
     public void onForfeitClick(ActionEvent event) {
+        logger.log(Level.INFO, "User pressed forfeit button.");
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm forfeit...");
         confirm.setHeaderText("Are you sure you want to forfeit?");
@@ -65,17 +72,38 @@ public class TicTacToeBoard {
         confirm.showAndWait().ifPresent(choice -> {
             if (choice == yes) {
                 try {
+                    logger.log(Level.INFO, "User decided to forfeit the game.");
+
                     ClientToServerProxy.send(List.of("tictactoe", "forfeit"));
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeNewGameScreen.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("TicTacToe - New Game");
-                    stage.show();
+                    String response = ClientToServerProxy.receive();
+
+                    if ("SUCCESS".equals(response)) {
+                        logger.log(Level.INFO, "Successfully forfeited the game.");
+
+                        FXMLLoader loader = new FXMLLoader(
+                                getClass().
+                                    getResource(
+                                        "/org/example/game_library/FXML/tictactoe/tictactoeNewGameScreen.fxml"
+                                    )
+                        );
+
+                        Parent root = loader.load();
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("TicTacToe - New Game");
+                        stage.show();
+                    } else {
+                        logger.log(Level.WARNING, "Failed to forfeit the game.");
+                        logger.log(Level.WARNING, "Server response: {0}", response);
+                    }
                 } catch (IOException e) {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Couldn't forfeit the game!");
+                    showAlert(Alert.AlertType.ERROR, "Error", "Couldn't forfeit the game! Reason: " + e.getMessage());
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
+            } else {
+                logger.log(Level.INFO, "User gave up on the forfeit of the game.");
             }
         });
     }

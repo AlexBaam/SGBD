@@ -46,6 +46,7 @@ public class TicTacToeForm {
         }
     }
 
+    @FXML
     public void onScoreClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed score button.");
         try{
@@ -91,14 +92,7 @@ public class TicTacToeForm {
         }
     }
 
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
+    @FXML
     public void onNewGameClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed new game button. (TicTacToe)");
         try {
@@ -112,5 +106,13 @@ public class TicTacToeForm {
             logger.log(Level.SEVERE, e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Eroare", "Nu s-a putut încărca jocul TicTacToe.");
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

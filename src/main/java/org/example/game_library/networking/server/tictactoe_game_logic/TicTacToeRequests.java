@@ -1,18 +1,33 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
 import org.example.game_library.networking.server.ThreadCreator;
+import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TicTacToeRequests {
-    public static void handleNewGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) throws IOException {
-        if (request.size() >= 3 && "local".equalsIgnoreCase(request.get(2))) {
-            output.writeObject("SUCCESS");
-        } else {
-            output.writeObject("FAILURE: Game mode not supported yet.");
+    private static final Logger logger = AppLogger.getLogger();
+
+    public static void handleNewGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        try{
+            if (request.size() >= 3 && "local".equalsIgnoreCase(request.get(2))) {
+                output.writeObject("SUCCESS");
+            } else if(request.size() >= 3 && "player".equalsIgnoreCase(request.get(2))) {
+                output.writeObject("SUCCESS");
+            } else if (request.size() >= 3 && "ai".equalsIgnoreCase(request.get(2))) {
+                output.writeObject("SUCCESS");
+            } else {
+                output.writeObject("FAILURE: Game mode not supported yet.");
+                logger.log(Level.WARNING, "Game mode selection failed! Reason send back to the client!");
+            }
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error writing to output stream: {0}", e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -36,6 +51,17 @@ public class TicTacToeRequests {
     }
 
     public static void handleForfeit(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        try{
+            if(request.size() == 2) {
+                output.writeObject("SUCCESS");
+            } else {
+                output.writeObject("Request didn't have enough arguments!");
+                logger.log(Level.WARNING, "Forfeit failed! Reason send back to the client!");
+            }
+        } catch (IOException e){
+            logger.log(Level.SEVERE, "Error writing to output stream: {0}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public static void handleMove(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {

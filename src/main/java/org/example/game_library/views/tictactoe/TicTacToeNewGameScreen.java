@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class TicTacToeNewGameScreen {
     private static final Logger logger = AppLogger.getLogger();
 
+    @FXML
     public void onAIClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed vs AI button. (TicTacToe - New Game)");
         try {
