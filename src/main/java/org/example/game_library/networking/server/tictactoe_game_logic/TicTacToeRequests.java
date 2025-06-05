@@ -1,7 +1,8 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
+import org.example.game_library.database.dao.SavedGamesDAO;
 import org.example.game_library.database.dao.TicTacToeDAO;
-import org.example.game_library.database.dao.UserDAO; // Importă UserDAO
+import org.example.game_library.database.dao.UserDAO;
 import org.example.game_library.networking.server.ThreadCreator;
 import org.example.game_library.utils.loggers.AppLogger;
 
@@ -10,11 +11,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level; // Adaugă import pentru Level
-import java.util.logging.Logger; // Adaugă import pentru Logger
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TicTacToeRequests {
-    private static final Logger logger = AppLogger.getLogger(); // Adaugă logger
+    private static final Logger logger = AppLogger.getLogger();
 
     public static void handleNewGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
         try{
@@ -37,11 +38,35 @@ public class TicTacToeRequests {
     }
 
     public static void handleLoadGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
-        // Implementează logica pentru încărcarea jocului
         try {
-            output.writeObject("FAILURE: Load game not implemented.");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error sending load game response: " + e.getMessage());
+            int userId = threadCreator.getCurrentUserId();
+
+            if (request.size() == 2) {
+                List<TicTacToeGame> savedGames = SavedGamesDAO.loadGamesForUser(userId, "tictactoe");
+                output.writeObject(savedGames);
+            } else if (request.size() == 3) {
+                int gameIndex = Integer.parseInt(request.get(2));
+
+                List<TicTacToeGame> savedGames = SavedGamesDAO.loadGamesForUser(userId, "tictactoe");
+
+                if (gameIndex < 0 || gameIndex >= savedGames.size()) {
+                    output.writeObject("FAILURE: Invalid game index!");
+                    return;
+                }
+
+                TicTacToeGame gameToLoad = savedGames.get(gameIndex);
+                threadCreator.setTicTacToeGame(gameToLoad);
+                output.writeObject(gameToLoad);
+            } else {
+                output.writeObject("FAILURE: Invalid load request format!");
+            }
+
+        } catch (Exception e) {
+            try {
+                output.writeObject("FAILURE: Error loading game: " + e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -136,6 +161,28 @@ public class TicTacToeRequests {
         } catch (IOException | NumberFormatException e) {
             try {
                 output.writeObject("FAILURE: " + e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void handleSaveGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
+        try {
+            int userId = threadCreator.getCurrentUserId();
+            TicTacToeGame game = threadCreator.getTicTacToeGame();
+
+            if (game == null) {
+                output.writeObject("FAILURE: No game in progress to save.");
+                return;
+            }
+
+            SavedGamesDAO.saveGame(userId, "tictactoe", game);
+            output.writeObject("SUCCESS");
+
+        } catch (Exception e) {
+            try {
+                output.writeObject("FAILURE: Could not save game - " + e.getMessage());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

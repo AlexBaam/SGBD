@@ -200,3 +200,6 @@ CREATE TRIGGER trg_create_scores_after_user_insert
     AFTER INSERT ON users
     FOR EACH ROW
     EXECUTE FUNCTION create_score_entries_after_user_insert();
+
+INSERT INTO game_types(name) VALUES ('tictactoe');
+INSERT INTO game_types(name) VALUES ('minesweeper');
