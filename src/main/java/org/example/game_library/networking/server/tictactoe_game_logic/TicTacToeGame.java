@@ -1,8 +1,5 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 
 public class TicTacToeGame implements Serializable {
@@ -65,7 +62,7 @@ public class TicTacToeGame implements Serializable {
     public boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == " "){
+                if (board[i][j].equals(" ")){
                     return false;
                 }
             }
@@ -77,8 +74,8 @@ public class TicTacToeGame implements Serializable {
         currentSymbol = currentSymbol.equals("X") ? "O" : "X";
     }
 
-    public char[][] getBoardCopy() {
-        char[][] copy = new char[3][3];
+    public String[][] getBoardCopy() {
+        String[][] copy = new String[3][3];
         for (int i = 0; i < 3; i++) {
             System.arraycopy(board[i], 0, copy[i], 0, 3);
         }
