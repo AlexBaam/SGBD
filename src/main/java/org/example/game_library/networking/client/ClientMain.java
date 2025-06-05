@@ -19,16 +19,14 @@ public class ClientMain extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // Attempt to connect to the server
             ClientToServerProxy.init();
             logger.log(Level.INFO, "Client connected");
 
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Client connection error: {0}", e.getMessage());
-            return; // stop if connection failed
+            return;
         }
 
-        // Load and display the main menu
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/menu/mainMenuForm.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);

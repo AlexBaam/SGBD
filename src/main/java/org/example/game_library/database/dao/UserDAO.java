@@ -41,13 +41,13 @@ public class UserDAO {
         }
 
         if (!BCrypt.checkpw(password, user.getPassword())) {
-            throw new LoginException("Parolă incorectă.");
+            throw new LoginException("Parola incorecta.");
         }
 
         try {
             boolean updated = updateUserLoggedInStatus(username, true);
             if (!updated) {
-                throw new LoginException("Eroare la actualizarea stării de login.");
+                throw new LoginException("Eroare la actualizarea starii de login.");
             }
             return user;
         } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class UserDAO {
                 return newUser;
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Eroare la înregistrare: " + e.getMessage());
+            logger.log(Level.SEVERE, "Eroare la inregistrare: " + e.getMessage());
             if (e.getMessage().contains("already exists")) {
                 logger.severe("Trigger a detectat un duplicat: " + e.getMessage());
             }
@@ -107,7 +107,7 @@ public class UserDAO {
             int affected = stmt.executeUpdate();
             return affected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Eroare la ștergerea userului {0}: {1}", new Object[]{username, e.getMessage()});
+            logger.log(Level.SEVERE, "Eroare la stergerea userului {0}: {1}", new Object[]{username, e.getMessage()});
             return false;
         }
     }
@@ -124,19 +124,19 @@ public class UserDAO {
 
     public List<ScoreEntry> getTicTacToeTopRankedPlayers(int topRanks) throws SQLException {
         List<ScoreEntry> topPlayers = new ArrayList<>();
-        // Apelăm funcția din baza de date
+
         String sql = "SELECT rank_nr, username, games_played FROM get_tictactoe_top_ranked_players(?)";
 
         try (Connection conn = DBUtils.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, topRanks); // Setează numărul de rank-uri dorite
+            stmt.setInt(1, topRanks); // setam nr de rankuri dorite
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int rank = rs.getInt("rank_nr");
                 String username = rs.getString("username");
-                int gamesPlayed = rs.getInt("games_played"); // Numele coloanei se potrivește cu funcția
+                int gamesPlayed = rs.getInt("games_played");
                 topPlayers.add(new ScoreEntry(rank, username, gamesPlayed));
             }
         }

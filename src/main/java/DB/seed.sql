@@ -58,7 +58,6 @@ WHERE ms.best_score > 0
 ORDER BY ms.best_score ASC
     LIMIT 10;
 
--- Funcție pentru un singur utilizator (dacă mai este necesară)
 CREATE OR REPLACE FUNCTION get_user_tictactoe_rank_manual(p_user_id INTEGER)
 RETURNS INTEGER AS $$
 DECLARE
@@ -84,7 +83,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION get_tictactoe_top_ranked_players(p_top_ranks INTEGER)
 RETURNS TABLE (
-    rank_nr BIGINT, -- Aici trebuie să fie BIGINT
+    rank_nr BIGINT,
     username VARCHAR(50),
     games_played INTEGER
 ) AS $$
@@ -169,13 +168,13 @@ RETURNS TRIGGER AS $$
 DECLARE
 BEGIN
     IF NEW.logged_in = TRUE AND OLD.logged_in = FALSE THEN
-        RAISE NOTICE 'Utilizatorul "%" încearcă să se conecteze.', NEW.username;
+        RAISE NOTICE 'Utilizatorul "%" incearca sa se conecteze.', NEW.username;
     ELSIF NEW.logged_in = FALSE AND OLD.logged_in = TRUE THEN
-        RAISE NOTICE 'Utilizatorul "%" încearcă să se deconecteze.', OLD.username;
+        RAISE NOTICE 'Utilizatorul "%" incearca sa se deconecteze.', OLD.username;
         RAISE NOTICE 'Utilizatorul "%" s-a deconectat cu succes.', OLD.username;
     ELSIF OLD.logged_in = TRUE AND NEW.logged_in = TRUE THEN
         RAISE EXCEPTION 'Utilizatorul "%" este deja conectat!', OLD.username
-        USING HINT = 'Nu poți seta logged_in la TRUE dacă este deja TRUE. Folosește o deconectare explicită (setând logged_in la FALSE) înainte de a te reconecta.';
+        USING HINT = 'Nu poti seta logged_in la TRUE daca este deja TRUE. Foloseste o deconectare explicita (setand logged_in la FALSE) inainte de a te reconecta.';
 END IF;
 RETURN NEW;
 END;
@@ -186,7 +185,6 @@ BEFORE UPDATE OF logged_in ON users
     FOR EACH ROW
     EXECUTE FUNCTION manage_user_login_and_sessions();
 
--- Trigger ptr pus automat si in celelalte tabele
 CREATE OR REPLACE FUNCTION create_score_entries_after_user_insert()
 RETURNS TRIGGER AS $$
 BEGIN
