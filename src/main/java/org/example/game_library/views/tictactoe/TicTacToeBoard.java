@@ -22,6 +22,9 @@ import java.util.logging.Logger;
 public class TicTacToeBoard {
     private static final Logger logger = AppLogger.getLogger();
 
+    @FXML
+    private GridPane boardGrid;
+
     private String currentSymbol = "X";
 
     private void togglePlayer() {

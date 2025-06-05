@@ -40,30 +40,19 @@ public class TicTacToeRequests {
     public static void handleLoadGame(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
         try {
             int userId = threadCreator.getCurrentUserId();
+            List<TicTacToeGame> games = SavedGamesDAO.loadGamesForUser(userId, "tictactoe");
 
-            if (request.size() == 2) {
-                List<TicTacToeGame> savedGames = SavedGamesDAO.loadGamesForUser(userId, "tictactoe");
-                output.writeObject(savedGames);
-            } else if (request.size() == 3) {
-                int gameIndex = Integer.parseInt(request.get(2));
-
-                List<TicTacToeGame> savedGames = SavedGamesDAO.loadGamesForUser(userId, "tictactoe");
-
-                if (gameIndex < 0 || gameIndex >= savedGames.size()) {
-                    output.writeObject("FAILURE: Invalid game index!");
-                    return;
-                }
-
-                TicTacToeGame gameToLoad = savedGames.get(gameIndex);
-                threadCreator.setTicTacToeGame(gameToLoad);
-                output.writeObject(gameToLoad);
+            if (games.isEmpty()) {
+                output.writeObject("FAILURE: No saved games found.");
             } else {
-                output.writeObject("FAILURE: Invalid load request format!");
+                TicTacToeGame lastGame = games.get(0);
+                threadCreator.setTicTacToeGame(lastGame);
+                output.writeObject(lastGame);
             }
 
         } catch (Exception e) {
             try {
-                output.writeObject("FAILURE: Error loading game: " + e.getMessage());
+                output.writeObject("FAILURE: Could not load game - " + e.getMessage());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

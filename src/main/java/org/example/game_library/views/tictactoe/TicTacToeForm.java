@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.game_library.networking.client.ClientToServerProxy;
 import org.example.game_library.networking.server.tictactoe_game_logic.TicTacToeGame;
@@ -23,6 +24,9 @@ public class TicTacToeForm {
     private static final Logger logger = AppLogger.getLogger();
 
     @FXML
+    private GridPane boardGrid;
+
+    @FXML
     private TextField usernameField;
 
     @FXML
@@ -33,6 +37,8 @@ public class TicTacToeForm {
 
     @FXML
     private Button backButton;
+
+    private String currentSymbol;
 
     @FXML
     public void onExitClick(ActionEvent event) {
@@ -112,12 +118,20 @@ public class TicTacToeForm {
         try {
             ClientToServerProxy.send(List.of("tictactoe", "load"));
 
-            // Primește o listă de jocuri salvate sau un singur joc
             Object obj = ClientToServerProxy.receive();
+
+            if (obj instanceof String response) {
+                if (response.startsWith("FAILURE")) {
+                    showAlert(Alert.AlertType.ERROR, "Eroare la încărcare", response);
+                    return;
+                }
+            }
+
             if (obj instanceof TicTacToeGame loadedGame) {
-                // Aplică pe UI
                 loadGameToUI(loadedGame);
                 showAlert(Alert.AlertType.INFORMATION, "Loaded", "Game loaded successfully.");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Unexpected", "Unknown response from server.");
             }
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Could not load game: " + e.getMessage());
@@ -125,6 +139,22 @@ public class TicTacToeForm {
     }
 
     private void loadGameToUI(TicTacToeGame game) {
-        // parcurgi game.getBoard() și setezi textul în butoanele GridPane
+        String[][] board = game.getBoard();
+
+        for (Node node : boardGrid.getChildren()) {
+            if (node instanceof Button button) {
+                Integer row = GridPane.getRowIndex(button);
+                Integer col = GridPane.getColumnIndex(button);
+
+                if (row == null) row = 0;
+                if (col == null) col = 0;
+
+                String cellValue = board[row][col];
+                button.setText(cellValue);
+                button.setDisable(!cellValue.equals(" "));
+            }
+        }
+
+        this.currentSymbol = game.getCurrentSymbol();
     }
 }

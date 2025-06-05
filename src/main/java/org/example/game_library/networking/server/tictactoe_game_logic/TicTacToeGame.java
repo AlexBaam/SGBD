@@ -1,5 +1,7 @@
 package org.example.game_library.networking.server.tictactoe_game_logic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 public class TicTacToeGame implements Serializable {
@@ -59,6 +61,7 @@ public class TicTacToeGame implements Serializable {
                 (board[0][2].equals(currentSymbol) && board[1][1].equals(currentSymbol) && board[2][0].equals(currentSymbol));
     }
 
+    @JsonIgnore
     public boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -74,6 +77,7 @@ public class TicTacToeGame implements Serializable {
         currentSymbol = currentSymbol.equals("X") ? "O" : "X";
     }
 
+    @JsonIgnore
     public String[][] getBoardCopy() {
         String[][] copy = new String[3][3];
         for (int i = 0; i < 3; i++) {
