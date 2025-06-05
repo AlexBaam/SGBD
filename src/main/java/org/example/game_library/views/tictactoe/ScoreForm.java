@@ -43,21 +43,17 @@ public class ScoreForm {
 
     @FXML
     public void initialize() {
-        // Configurează coloanele tabelei
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        gamesPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("totalGames")); // Asigură-te că numele câmpului se potrivește cu metoda get din ScoreEntry
+        gamesPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("totalGames"));
 
-        // Încarcă datele la inițializare
         loadScores();
     }
 
     private void loadScores() {
         try {
-            // Trimite comanda către server pentru a obține scorurile de TicTacToe
             ClientToServerProxy.send(List.of("tictactoe", "score"));
 
-            // Așteaptă răspunsul de la server (care ar trebui să fie direct o listă de ScoreEntry)
             Object response = ClientToServerProxy.receive();
 
             if (response instanceof List<?> scoreList) {
@@ -67,7 +63,7 @@ public class ScoreForm {
                         data.add((ScoreEntry) item);
                     } else {
                         logger.log(Level.WARNING, "Received unexpected object type in score list: " + item.getClass().getName());
-                        showAlert(Alert.AlertType.ERROR, "Eroare de date", "A apărut o eroare la interpretarea datelor de scor.");
+                        showAlert(Alert.AlertType.ERROR, "Eroare de date", "A aparut o eroare la interpretarea datelor de scor.");
                         return;
                     }
                 }
@@ -77,12 +73,12 @@ public class ScoreForm {
                 showAlert(Alert.AlertType.ERROR, "Eroare Server", errorMessage);
                 logger.log(Level.WARNING, "Server error when loading scores: " + errorMessage);
             } else {
-                showAlert(Alert.AlertType.ERROR, "Eroare comunicare", "Răspuns neașteptat de la server: " + response);
+                showAlert(Alert.AlertType.ERROR, "Eroare comunicare", "Raspuns neasteptat de la server: " + response);
                 logger.log(Level.WARNING, "Unexpected response from server: " + (response != null ? response.getClass().getName() : "null"));
             }
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Eroare rețea", "Nu s-a putut conecta la server pentru a obține scorurile.");
+            showAlert(Alert.AlertType.ERROR, "Eroare retea", "Nu s-a putut conecta la server pentru a obtine scorurile.");
             logger.log(Level.SEVERE, "Network error loading scores: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             showAlert(Alert.AlertType.ERROR, "Eroare protocol", "Probleme la deserializarea datelor de scor de la server.");
@@ -93,8 +89,6 @@ public class ScoreForm {
     @FXML
     private void onBackClick(ActionEvent event) {
         try {
-            // Calea CORECRĂ pentru a te întoarce la meniul principal TicTacToe
-            // Bazat pe '/org/example/game_library/FXML/tictactoe/tictactoeForm.fxml' din TicTacToeScoreForm.java
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeForm.fxml"));
             Parent root = loader.load();
 
@@ -103,7 +97,7 @@ public class ScoreForm {
             logger.log(Level.INFO, "Navigated back to TicTacToe main menu from scoreboard.");
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to load TicTacToe main menu: " + e.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Eroare de navigare", "Nu s-a putut întoarce la meniul TicTacToe.");
+            showAlert(Alert.AlertType.ERROR, "Eroare de navigare", "Nu s-a putut intoarce la meniul TicTacToe.");
         }
     }
 

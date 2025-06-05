@@ -62,14 +62,13 @@ public class TicTacToeRequests {
     public static void handleScore(List<String> request, ThreadCreator threadCreator, ObjectOutputStream output, ObjectInputStream input) {
         UserDAO userDAO = new UserDAO();
         try {
-            // Vom cere top 3 rank-uri, conform cerinței tale
-            List<ScoreEntry> topPlayers = userDAO.getTicTacToeTopRankedPlayers(3); // Obține top 3 rank-uri
-            output.writeObject(topPlayers); // Trimite lista de ScoreEntry-uri către client
+            List<ScoreEntry> topPlayers = userDAO.getTicTacToeTopRankedPlayers(3);
+            output.writeObject(topPlayers);
             logger.log(Level.INFO, "Sent TicTacToe top ranked players to client.");
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Database error retrieving TicTacToe scores: " + e.getMessage());
             try {
-                output.writeObject("ERROR: Database error retrieving scores."); // Trimite un mesaj de eroare
+                output.writeObject("ERROR: Database error retrieving scores.");
             } catch (IOException ioException) {
                 logger.log(Level.SEVERE, "Error sending database error to client: " + ioException.getMessage());
             }

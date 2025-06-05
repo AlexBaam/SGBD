@@ -20,7 +20,7 @@ public class AppLogger {
             // Use colored console output
             ConsoleHandler consoleHandler = new ConsoleHandler();
             consoleHandler.setLevel(Level.ALL);
-            consoleHandler.setFormatter(new LoggerColor()); // Aici setez ca loggerul meu sa fie setat dupa propriile reguli
+            consoleHandler.setFormatter(new LoggerColor());
             logger.addHandler(consoleHandler);
 
             FileHandler fileHandler = new FileHandler("logs/game_library.log", true);

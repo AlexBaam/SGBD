@@ -22,7 +22,6 @@ public class ServerMain {
 
                     logger.log(Level.INFO, "Accepted new client successfully!");
 
-                    // Create and start a new thread for the client
                     ThreadCreator clientHandler = new ThreadCreator(clientSocket);
                     clientHandler.start();
                 } catch (IOException e) {

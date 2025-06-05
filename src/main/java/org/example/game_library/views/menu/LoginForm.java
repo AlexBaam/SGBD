@@ -52,7 +52,7 @@ public class LoginForm {
 
             ClientToServerProxy.send(parameters);
 
-            String response = (String) ClientToServerProxy.receive(); // Aici primesc SUCCESS sau mesajul de eroare
+            String response = (String) ClientToServerProxy.receive();
 
             logger.log(Level.INFO, "Received response: {0}", response);
 
@@ -65,8 +65,6 @@ public class LoginForm {
                 stage.setScene(new Scene(root));
                 logger.log(Level.INFO, "Login successful! Switched to dashboard!");
             } else {
-                // Acum, 'response' va conține mesajul de eroare de la server,
-                // inclusiv cel de la trigger, dacă e cazul.
                 showAlert(Alert.AlertType.ERROR, "Login Failed", response);
                 logger.log(Level.WARNING, "Login failed for user: {0}. Response: {1}", new Object[]{username, response});
             }

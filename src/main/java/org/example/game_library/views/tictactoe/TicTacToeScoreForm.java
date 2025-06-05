@@ -20,11 +20,9 @@ public class TicTacToeScoreForm {
     public void onBackClick(ActionEvent event) {
         logger.log(Level.INFO, "User pressed back button. (TicTacToe - New Game)");
         try {
-            // Asigură-te că /org/example/game_library/FXML/mainMenuForm.fxml este calea corectă către ecranul la care vrei să te întorci
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/game_library/FXML/tictactoe/tictactoeForm.fxml"));
             Parent root = loader.load();
 
-            // Utilizează evenimentul pentru a obține stage-ul curent, o practică mai bună
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             logger.log(Level.INFO, "Navigated back to main menu.");

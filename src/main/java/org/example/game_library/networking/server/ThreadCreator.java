@@ -28,7 +28,7 @@ public class ThreadCreator extends Thread {
     private final long threadId;
 
     private boolean logged = false;
-    private int currentUserId = -1; // Ptr utilizator mai tarziu
+    private int currentUserId = -1;
     private String currentUserName;
 
     private TicTacToeGame ticTacToeGame;
@@ -68,7 +68,7 @@ public class ThreadCreator extends Thread {
                     continue;
                 }
 
-                //Safe cast
+
                 @SuppressWarnings("unchecked")
                 List<String> request = (List<String>) list;
 
@@ -164,20 +164,20 @@ public class ThreadCreator extends Thread {
         UserDAO userRepo = new UserDAO();
         try {
             User user = userRepo.authenticate(username, password);
-            logged = true; // Marchează sesiunea ca autentificată
-            currentUserId = user.getUser_id(); // Stochează ID-ul utilizatorului
+            logged = true;
+            currentUserId = user.getUser_id();
             currentUserName = user.getUsername();
             output.writeObject("SUCCESS");
         } catch (org.example.game_library.utils.exceptions.LoginException e) {
-            // Prindem excepția specifică de login (inclusiv "deja conectat")
+
             logger.log(Level.INFO, "Login failed for user {0}: {1}", new Object[]{username, e.getMessage()});
-            output.writeObject(e.getMessage()); // Trimite mesajul de eroare clientului
+            output.writeObject(e.getMessage());
         }
     }
 
     private void handleDelete() throws IOException {
         if (!logged || currentUserName == null) {
-            output.writeObject("Nu sunteți autentificat pentru a șterge contul.");
+            output.writeObject("Nu sunteti autentificat pentru a sterge contul.");
             logger.log(Level.WARNING, "Attempted delete by unauthenticated thread {0}.", threadId);
             return;
         }
@@ -192,40 +192,39 @@ public class ThreadCreator extends Thread {
                 output.writeObject("SUCCESS");
                 logger.log(Level.INFO, "User {0} successfully deleted account.", currentUserName);
             } else {
-                output.writeObject("Eroare la ștergerea contului. Utilizatorul nu a putut fi găsit sau șters.");
+                output.writeObject("Eroare la stergerea contului. Utilizatorul nu a putut fi gasit sau sters.");
                 logger.log(Level.WARNING, "Failed to delete user {0}.", currentUserName);
             }
         } catch (PersistenceException e) {
             logger.log(Level.SEVERE, "Database error during user deletion for {0}: {1}", new Object[]{currentUserName, e.getMessage()});
-            output.writeObject("Eroare de bază de date la ștergerea contului: " + e.getMessage());
+            output.writeObject("Eroare de baza de date la stergerea contului: " + e.getMessage());
         }
     }
 
     private void handleLogout(List<String> request) throws IOException {
 
         if (!logged || currentUserName == null) {
-            output.writeObject("Nu sunteți autentificat pentru a vă deconecta.");
+            output.writeObject("Nu sunteti autentificat pentru a va deconecta.");
             logger.log(Level.WARNING, "Attempted logout by unauthenticated thread {0}.", threadId);
             return;
         }
 
         UserDAO userRepo = new UserDAO();
         try {
-            boolean success = userRepo.updateUserLoggedInStatus(currentUserName, false); // Setează logged_in la FALSE
+            boolean success = userRepo.updateUserLoggedInStatus(currentUserName, false);
             if (success) {
-                logged = false; // Marchează sesiunea ca deconectată
-                currentUserId = -1; // Resetează ID-ul utilizatorului
-                currentUserName = null; // Resetează username-ul
+                logged = false;
+                currentUserId = -1;
+                currentUserName = null;
                 output.writeObject("SUCCESS");
                 logger.log(Level.INFO, "User {0} successfully logged out.", currentUserName);
             } else {
-                output.writeObject("Eroare la deconectare. Vă rugăm să încercați din nou.");
+                output.writeObject("Eroare la deconectare. Va rugam sa incercati din nou.");
                 logger.log(Level.WARNING, "Failed to update logged_in status to FALSE for user {0}.", currentUserName);
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Database error during logout for user {0}: {1}", new Object[]{currentUserName, e.getMessage()});
-            // Trigger-ul de logout nu ar trebui să arunce excepții, dar prindem orice eroare de DB
-            output.writeObject("Eroare de bază de date la deconectare: " + e.getMessage());
+            output.writeObject("Eroare de baza de date la deconectare: " + e.getMessage());
         }
     }
 
@@ -251,16 +250,16 @@ public class ThreadCreator extends Thread {
                 return;
             }
 
-                switch (cTTT) {
-                    case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);
-                    case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this, output, input);
-                    case SAVEGAME -> TicTacToeRequests.handleSaveGame(request, this, output, input);
-                    case SCORE -> TicTacToeRequests.handleScore(request,this, output, input);
-                    case FORFEIT -> TicTacToeRequests.handleForfeit(request,this, output, input);
-                    case MOVE -> TicTacToeRequests.handleMove(request, this, output, input);
-                    case EXIT -> handleExit(request);
-                    default -> output.writeObject("Command " + request.get(1) + " not yet implemented!");
-                }
+            switch (cTTT) {
+                case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);
+                case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this, output, input);
+                case SAVEGAME -> TicTacToeRequests.handleSaveGame(request, this, output, input);
+                case SCORE -> TicTacToeRequests.handleScore(request,this, output, input);
+                case FORFEIT -> TicTacToeRequests.handleForfeit(request,this, output, input);
+                case MOVE -> TicTacToeRequests.handleMove(request, this, output, input);
+                case EXIT -> handleExit(request);
+                default -> output.writeObject("Command " + request.get(1) + " not yet implemented!");
+            }
         } else {
             output.writeObject("FAILURE");
         }
@@ -278,3 +277,4 @@ public class ThreadCreator extends Thread {
         return currentUserId;
     }
 }
+

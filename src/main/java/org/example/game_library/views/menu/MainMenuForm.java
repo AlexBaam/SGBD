@@ -25,7 +25,6 @@ public class MainMenuForm {
     public void initialize() {
         System.out.println("Main menu initialized.");
 
-        // Make window draggable
         rootPane_MainMenu.setOnMousePressed(this::handleMousePressed);
         rootPane_MainMenu.setOnMouseDragged(this::handleMouseDragged);
     }
