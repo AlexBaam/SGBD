@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.game_library.networking.client.ClientToServerProxy;
+import org.example.game_library.networking.server.tictactoe_game_logic.TicTacToeGame;
 import org.example.game_library.utils.loggers.AppLogger;
 
 import java.io.IOException;
@@ -104,5 +105,26 @@ public class TicTacToeForm {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void onLoadClick(ActionEvent event) {
+        try {
+            ClientToServerProxy.send(List.of("tictactoe", "load"));
+
+            // Primește o listă de jocuri salvate sau un singur joc
+            Object obj = ClientToServerProxy.receive();
+            if (obj instanceof TicTacToeGame loadedGame) {
+                // Aplică pe UI
+                loadGameToUI(loadedGame);
+                showAlert(Alert.AlertType.INFORMATION, "Loaded", "Game loaded successfully.");
+            }
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Could not load game: " + e.getMessage());
+        }
+    }
+
+    private void loadGameToUI(TicTacToeGame game) {
+        // parcurgi game.getBoard() și setezi textul în butoanele GridPane
     }
 }

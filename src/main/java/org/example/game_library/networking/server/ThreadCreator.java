@@ -254,6 +254,7 @@ public class ThreadCreator extends Thread {
                 switch (cTTT) {
                     case NEWGAME -> TicTacToeRequests.handleNewGame(request, this, output, input);
                     case LOADGAME -> TicTacToeRequests.handleLoadGame(request, this, output, input);
+                    case SAVEGAME -> TicTacToeRequests.handleSaveGame(request, this, output, input);
                     case SCORE -> TicTacToeRequests.handleScore(request,this, output, input);
                     case FORFEIT -> TicTacToeRequests.handleForfeit(request,this, output, input);
                     case MOVE -> TicTacToeRequests.handleMove(request, this, output, input);

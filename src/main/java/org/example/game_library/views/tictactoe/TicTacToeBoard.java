@@ -68,6 +68,18 @@ public class TicTacToeBoard {
 
     @FXML
     public void onSaveClick(ActionEvent event) {
+        try {
+            ClientToServerProxy.send(List.of("tictactoe", "save"));
+            String response = (String) ClientToServerProxy.receive();
+
+            if ("SUCCESS".equals(response)) {
+                showAlert(Alert.AlertType.INFORMATION, "Game Saved", "Your game was saved successfully!");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Save Failed", response);
+            }
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Could not save game: " + e.getMessage());
+        }
     }
 
     @FXML

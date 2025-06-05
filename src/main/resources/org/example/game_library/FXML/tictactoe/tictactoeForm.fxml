@@ -54,7 +54,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="loadGameButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Load Game">
+            <Button fx:id="loadGameButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoadClick" prefHeight="50.0" prefWidth="200.0" styleClass="transparent-button" stylesheets="@../styles.css" text="Load Game">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
