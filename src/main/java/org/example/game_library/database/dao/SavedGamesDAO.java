@@ -64,23 +64,4 @@ public class SavedGamesDAO {
 
         return games;
     }
-
-    public static TicTacToeGame loadGameById(int saveId) throws Exception {
-        String selectSQL = "SELECT game_state FROM saved_games WHERE save_id = ?";
-
-        try (Connection conn = DBUtils.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(selectSQL)) {
-
-            stmt.setInt(1, saveId);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String json = rs.getString("game_state");
-                    return mapper.readValue(json, TicTacToeGame.class);
-                }
-            }
-        }
-
-        return null;
-    }
 }
